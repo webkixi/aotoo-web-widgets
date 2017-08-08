@@ -19,9 +19,9 @@ function $tree(props){
   }
 }
 
-module.exports = {
-  item: $item,
-  list: $list,
-  tree: $tree,
-  transTree: transTree
-}
+Aotoo.plugins('item', $item)
+Aotoo.plugins('list', $list)
+Aotoo.plugins('tree', $tree)
+Aotoo.plugins('transTree', transTree)
+
+module.exports = {}
