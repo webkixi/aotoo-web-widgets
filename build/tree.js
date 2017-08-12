@@ -53,7 +53,7 @@ function subTree(item, dataAry, deep) {
 	sons.map(function (son, ii) {
 		son.itemClass = son.itemClass && son.itemClass.indexOf('level' + deep) == -1 ? son.itemClass + ' level' + deep : 'level' + deep;
 		// son.itemClass = son.itemClass ? son.itemClass +' level'+deep : 'level'+deep
-		if (son.idf && !son.parent && idrecode.indexOf(son.idf) == -1) {
+		if (son.idf && idrecode.indexOf(son.idf) == -1) {
 			idrecode.push(son.idf);
 			nsons = nsons.concat([subTree(son, dataAry, ++deep)]);
 			--deep;
@@ -86,7 +86,7 @@ module.exports = function (dataAry) {
 			} else {
 				item['attr'] = { 'data-treeid': ii };
 			}
-			if (item.idf && idrecode.indexOf(item.idf) == -1) {
+			if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
 				item.itemClass = item.itemClass && item.itemClass.indexOf('level0') == -1 ? item.itemClass + ' level0' : 'level0';
 				item.ref = item.idf;
 				menus.push(subTree(item, dataAry));
