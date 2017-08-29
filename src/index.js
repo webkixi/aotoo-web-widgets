@@ -1,3 +1,6 @@
+var isClient = typeof window !== 'undefined'
+var context = ( C => C ? window : global)(isClient) || {}
+const Aotoo = context.Aotoo
 const transTree = require('./tree')
 
 function $item(props, isreact){
