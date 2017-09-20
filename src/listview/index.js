@@ -80,7 +80,7 @@ class TmpApp extends React.Component {
 			const ulclass = `hlist ${this.props.listClass||''}`
 			if (fills) {
 				const fill = fills
-				return React.cloneElement(fill, {className: ulclass})
+				return React.cloneElement(fill, {className: ulclass, style: sty})
 			} else {
 				return <ul className={ulclass}></ul>
 			}

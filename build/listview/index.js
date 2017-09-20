@@ -119,7 +119,7 @@ var TmpApp = function (_React$Component) {
 				var ulclass = 'hlist ' + (this.props.listClass || '');
 				if (fills) {
 					var fill = fills;
-					return React.cloneElement(fill, { className: ulclass });
+					return React.cloneElement(fill, { className: ulclass, style: sty });
 				} else {
 					return React.createElement('ul', { className: ulclass });
 				}

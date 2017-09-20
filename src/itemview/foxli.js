@@ -76,7 +76,7 @@ class fox extends React.Component {
 			, id: k1
 			, style: sty
 			, className: getClass.call(self, this.resault)
-			, key: uniqueId('fox_')
+			// , key: uniqueId('fox_')
 		}
 		return <li {..._props} {...data_attr}>{fill}</li>
 	}

@@ -115,8 +115,8 @@ var fox = function (_React$Component) {
 				ref: ref,
 				id: k1,
 				style: sty,
-				className: getClass.call(self, this.resault),
-				key: (0, _lodash2.default)('fox_')
+				className: getClass.call(self, this.resault)
+				// , key: uniqueId('fox_')
 			};
 			return React.createElement(
 				'li',
