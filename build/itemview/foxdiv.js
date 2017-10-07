@@ -6,25 +6,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactCombinex = require('react-combinex');
-
-var _lodash = require('lodash.uniqueid');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               itemView
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               放回 div 结构, 一般可以直接调用
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+itemView
+放回 div 结构, 一般可以直接调用
+*/
 // const React = (typeof React != 'undefined' ? React : require('react'))
-
-
 var dealWithDataMethod = require('./common/itemDealWithData');
 
 function getClass(resault) {
@@ -115,8 +107,8 @@ var fox = function (_React$Component) {
 				ref: ref,
 				id: k1,
 				style: sty,
-				className: getClass.call(self, this.resault),
-				key: (0, _lodash2.default)('fox_')
+				className: getClass.call(self, this.resault)
+				// , key: uniqueId('fox_')
 			};
 			return React.createElement(
 				'div',
@@ -129,5 +121,5 @@ var fox = function (_React$Component) {
 	return fox;
 }(React.Component);
 
-module.exports = (0, _reactCombinex._wrap)(fox);
+module.exports = Aotoo.wrap(fox);
 //# sourceMappingURL=../maps/itemview/foxdiv.js.map

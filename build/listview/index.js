@@ -4,26 +4,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _lodash = require('lodash.clonedeep');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * list 通用组件
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * 返回 div > (ul > li)*n
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-
-// const isClient = typeof window !== 'undefined'
-// const React = (typeof React != 'undefined' ? React : require('react'))
-// const reactDom = ( C => typeof ReactDOM != 'undefined' ? ReactDOM : typeof ReactDom != 'undefined' ? ReactDom : C ? require('react-dom') : require('react-dom/server'))(isClient)
-
+/**
+* list 通用组件
+* 返回 div > (ul > li)*n
+*/
+var cloneDeep = Aotoo.cloneDeep;
 var Fox = require('../itemview/foxli');
 
 var TmpApp = function (_React$Component) {
@@ -57,7 +48,7 @@ var TmpApp = function (_React$Component) {
 		key: '_dealWithItemView',
 		value: function _dealWithItemView(opts) {
 			var that = this;
-			var props = (0, _lodash2.default)(that.props);
+			var props = cloneDeep(that.props);
 			props.idf = opts.i;
 			props.key = 'fox' + opts.i;
 			props.data = opts.item;
@@ -75,7 +66,7 @@ var TmpApp = function (_React$Component) {
 				props.itemMethod = opts.item.itemMethod || props.itemMethod;
 				delete opts.item.itemMethod;
 			}
-			return React.createElement(Fox, _extends({ ref: "child_" + opts.i, operate: listOperate, idf: opts.i }, props, { data: opts.item }));
+			return React.createElement(Fox, _extends({ foxref: "child_" + opts.i, operate: listOperate, idf: opts.i }, props, { data: opts.item }));
 		}
 	}, {
 		key: '_dealWithData',

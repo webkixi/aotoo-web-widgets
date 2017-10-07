@@ -3,8 +3,6 @@ itemView
 放回 li 结构, 用于modules/list 调用，作为ul/li部分
 */
 // const React = (typeof React != 'undefined' ? React : require('react'))
-import {_wrap as wrap} from 'react-combinex'
-import uniqueId from 'lodash.uniqueid'
 var dealWithDataMethod = require('./common/itemDealWithData')
 
 function getClass(resault){
@@ -81,4 +79,4 @@ class fox extends React.Component {
 		return <li {..._props} {...data_attr}>{fill}</li>
 	}
 }
-module.exports = wrap(fox);
+module.exports = Aotoo.wrap(fox);

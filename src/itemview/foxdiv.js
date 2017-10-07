@@ -3,8 +3,6 @@ itemView
 放回 div 结构, 一般可以直接调用
 */
 // const React = (typeof React != 'undefined' ? React : require('react'))
-import {_wrap as wrap} from 'react-combinex'
-import uniqueId from 'lodash.uniqueid'
 var dealWithDataMethod = require('./common/itemDealWithData')
 
 function getClass(resault){
@@ -76,10 +74,10 @@ class fox extends React.Component {
 			, id: k1
 			, style: sty
 			, className: getClass.call(self, this.resault)
-			, key: uniqueId('fox_')
+			// , key: uniqueId('fox_')
 		}
 		return <div {..._props} {...data_attr}>{fill}</div>
 	}
 }
 
-module.exports = wrap(fox);
+module.exports = Aotoo.wrap(fox);

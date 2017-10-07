@@ -1,23 +1,12 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; // const React = (typeof React != 'undefined' ? React : require('react'))
-
-
-var _lodash = require('lodash.clonedeep');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _lodash3 = require('lodash.merge');
-
-var _lodash4 = _interopRequireDefault(_lodash3);
-
-var _lodash5 = require('lodash.uniqueid');
-
-var _lodash6 = _interopRequireDefault(_lodash5);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var cloneDeep = Aotoo.cloneDeep;
+var merge = Aotoo.merge;
+var uniqueId = Aotoo.uniqueId;
 
 var mapKeys = function mapKeys(obj, cb) {
   var keys = Object.keys(obj);
@@ -112,7 +101,7 @@ function dealWithLi(prop_li, liClassName) {
     prop_li.map(function (li_item, li_i) {
       var _item = normalItem(li_item);
       var _liItem;
-      var _props = { "key": (0, _lodash6.default)('li-') };
+      var _props = { "key": uniqueId('li-') };
       if (Array.isArray(li_item)) {
         _props.className = "nextLevel2";
         _liItem = React.createElement('li', _props, _item);
@@ -133,7 +122,7 @@ function dealWithLi(prop_li, liClassName) {
               }
             }
           });
-          _props = (0, _lodash4.default)(_props, data_attr);
+          _props = merge(_props, data_attr);
         }
         if (li_item.li) {
           // itemroot
@@ -194,16 +183,25 @@ function dealWithData(state) {
       var dotDom;
       var liDom;
 
+      if (typeof data == 'string' || typeof data == 'number' || React.isValidElement(data)) {
+        data = { title: data };
+      }
+
       if (data.itemClass) clsName = "item " + data.itemClass;
       if (data.itemStyle) {
         //  clsName = 'item';
         sty = data.itemStyle;
       }
 
-      var ref = data.ref;
+      //  var ref = data.foxref
+      var ref = _state.foxref;
       var k1 = data.id || '',
           v1 = data.url || 'javascript:void();',
-          k2 = data.title || data.caption || data.catName || data.text || data.model || data.quality || data.vender || (typeof data === 'string' || typeof data === 'number' || React.isValidElement(data) ? data : '') || '',
+
+      //  k2 = data.title||data.caption||data.catName||data.text||
+      //      data.model||data.quality||data.vender||
+      //      (typeof data==='string'||typeof data==='number'||React.isValidElement(data)?data:'')||'',
+      k2 = data.title || data.caption || data.catName || data.text || data.model || data.quality || data.vender || '',
           v2 = data.attr || '',
           k3,
           v3 = data.value || '',
@@ -264,7 +262,7 @@ function dealWithData(state) {
             if (!React.isValidElement(item)) {
               var title = item.title || item.caption || item.text;
               if (React.isValidElement(title)) {
-                var props = (0, _lodash2.default)(title.props);
+                var props = cloneDeep(title.props);
                 props.key = 'body_' + i;
                 title = React.createElement(title.type, props);
               } else if ((typeof title === 'string' || typeof title == 'number') && typeof item.url === 'string') {
@@ -300,7 +298,7 @@ function dealWithData(state) {
               }();
               bodys.push(ppp);
             } else {
-              var _props2 = (0, _lodash4.default)({}, item.props);
+              var _props2 = merge({}, item.props);
               _props2.key = 'bodyitem_' + i;
               bodys.push(React.createElement(item.type, _props2));
             }
@@ -325,7 +323,7 @@ function dealWithData(state) {
             if (!React.isValidElement(item)) {
               var title = item.title || item.caption || item.text;
               if (React.isValidElement(title)) {
-                var props = (0, _lodash2.default)(title.props);
+                var props = cloneDeep(title.props);
                 props.key = 'footer_' + i;
                 title = React.createElement(title.type, props);
               } else if ((typeof title === 'string' || typeof title == 'number') && typeof item.url === 'string') {
@@ -362,7 +360,7 @@ function dealWithData(state) {
               }();
               footers.push(ppp);
             } else {
-              var _props3 = (0, _lodash4.default)({}, item.props);
+              var _props3 = merge({}, item.props);
               _props3.key = 'footer_' + i;
               footers.push(React.createElement(item.type, _props3));
             }
@@ -387,7 +385,7 @@ function dealWithData(state) {
           if (isPlainObject(item)) {
             if (React.isValidElement(item)) {
               var it = item;
-              var props = (0, _lodash2.default)(it.props);
+              var props = cloneDeep(it.props);
               var styl = props.style;
               delete props.style;
               var tmp = React.createElement(it.type, props, it.props.children);

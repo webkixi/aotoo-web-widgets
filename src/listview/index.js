@@ -2,12 +2,8 @@
 * list 通用组件
 * 返回 div > (ul > li)*n
 */
-import cloneDeep from 'lodash.clonedeep'
-// const isClient = typeof window !== 'undefined'
-// const React = (typeof React != 'undefined' ? React : require('react'))
-// const reactDom = ( C => typeof ReactDOM != 'undefined' ? ReactDOM : typeof ReactDom != 'undefined' ? ReactDom : C ? require('react-dom') : require('react-dom/server'))(isClient)
-
-var Fox = require('../itemview/foxli')
+const cloneDeep = Aotoo.cloneDeep
+const Fox = require('../itemview/foxli')
 
 class TmpApp extends React.Component {
 	constructor(props){
@@ -48,7 +44,7 @@ class TmpApp extends React.Component {
 			props.itemMethod = opts.item.itemMethod || props.itemMethod
 			delete opts.item.itemMethod
 		}
-		return <Fox ref={"child_"+opts.i} operate={listOperate} idf={opts.i} {...props} data={opts.item} />;
+		return <Fox foxref={"child_"+opts.i} operate={listOperate} idf={opts.i} {...props} data={opts.item} />;
 	}
 
 	_dealWithData(data){

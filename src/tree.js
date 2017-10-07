@@ -35,7 +35,7 @@
 
 // let idrecode = {}
 
-import filter from 'lodash.filter'
+const filter = Aotoo.filter
 let idrecode = []
 function subTree(item, dataAry, deep){
 	deep = deep||1
@@ -79,7 +79,7 @@ module.exports = function(dataAry){
 			}
 			if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
 				item.itemClass = item.itemClass && item.itemClass.indexOf('level0') == -1 ? item.itemClass +' level0' : 'level0'
-				item.ref = item.idf
+				// item.ref = item.idf
 				menus.push(subTree(item, dataAry))
 			}
 			if (!item.idf && !item.parent) {

@@ -1,6 +1,8 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; // 数据结构
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// 数据结构
 // const _data = [
 //   {title: '典型页面', content: '123', idf: 'aaa'},
 //   {title: '典型页面1', content: 'aaa', idf: 'bbb', parent: 'aaa'},
@@ -37,17 +39,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 // let idrecode = {}
 
-var _lodash = require('lodash.filter');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+var filter = Aotoo.filter;
 var idrecode = [];
 function subTree(item, dataAry, deep) {
 	deep = deep || 1;
 	var nsons = [];
-	var sons = (0, _lodash2.default)(dataAry, function (o) {
+	var sons = filter(dataAry, function (o) {
 		return o.parent == item.idf;
 	});
 	sons.map(function (son, ii) {
@@ -88,7 +85,7 @@ module.exports = function (dataAry) {
 			}
 			if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
 				item.itemClass = item.itemClass && item.itemClass.indexOf('level0') == -1 ? item.itemClass + ' level0' : 'level0';
-				item.ref = item.idf;
+				// item.ref = item.idf
 				menus.push(subTree(item, dataAry));
 			}
 			if (!item.idf && !item.parent) {

@@ -1,7 +1,6 @@
-// const React = (typeof React != 'undefined' ? React : require('react'))
-import cloneDeep from 'lodash.clonedeep'
-import merge from 'lodash.merge'
-import uniqueId from 'lodash.uniqueid'
+const cloneDeep = Aotoo.cloneDeep
+const merge = Aotoo.merge
+const uniqueId = Aotoo.uniqueId
 
 var mapKeys = function(obj, cb){
   const keys = Object.keys(obj)
@@ -159,18 +158,24 @@ function dealWithData(state){
        var dotDom;
        var liDom;
 
+       if (typeof data == 'string' || typeof data== 'number' || React.isValidElement(data)) {
+         data = {title: data}
+       }
+
        if(data.itemClass) clsName = "item "+data.itemClass
        if(data.itemStyle){
         //  clsName = 'item';
          sty = data.itemStyle;
        }
 
-       var ref = data.ref;
+      //  var ref = data.foxref
+       var ref = _state.foxref
        var k1 = data.id||'',
          v1 = data.url||'javascript:void();',
-         k2 = data.title||data.caption||data.catName||data.text||
-             data.model||data.quality||data.vender||
-             (typeof data==='string'||typeof data==='number'||React.isValidElement(data)?data:'')||'',
+        //  k2 = data.title||data.caption||data.catName||data.text||
+        //      data.model||data.quality||data.vender||
+        //      (typeof data==='string'||typeof data==='number'||React.isValidElement(data)?data:'')||'',
+         k2 = data.title||data.caption||data.catName||data.text||data.model||data.quality||data.vender||'',
          v2 = data.attr||'',
          k3, v3 = data.value||'',
          k4, v4 = data.content

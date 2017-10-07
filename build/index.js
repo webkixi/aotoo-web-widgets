@@ -1,10 +1,9 @@
 'use strict';
 
-var isClient = typeof window !== 'undefined';
+var isClient = Aotoo.isClient;
 var context = function (C) {
   return C ? window : global;
 }(isClient) || {};
-var Aotoo = context.Aotoo;
 var transTree = require('./tree');
 
 function $item(props, isreact) {
