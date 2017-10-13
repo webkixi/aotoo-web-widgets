@@ -1,6 +1,8 @@
 const cloneDeep = Aotoo.cloneDeep
 const merge = Aotoo.merge
 const uniqueId = Aotoo.uniqueId
+const isPlainObject = Aotoo.isPlainObject
+const filter = Aotoo.filter
 
 var mapKeys = function(obj, cb){
   const keys = Object.keys(obj)
@@ -9,34 +11,34 @@ var mapKeys = function(obj, cb){
   })
 }
 
-var isPlainObject = function(obj){
-  if (typeof obj == 'object') {
-    return !Array.isArray(obj)
-  }
-}
+// var isPlainObject = function(obj){
+//   if (typeof obj == 'object') {
+//     return !Array.isArray(obj)
+//   }
+// }
 
 const itemrootCkb = <input type='checkbox' className='itemrootCkb'/>
 
 function lazyimg(img, idf){
-  const hoc = this.hoc || []
-  if ( hoc.indexOf('scroll') >-1 ){
-    if (img.indexOf('$$$')>-1){
-      var tmp = img.split('$$$')
-      if (tmp.length===2){
-        if (idf) return <li key={'img'+idf} className='himg-item lazyimg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} />
-        return <div className='himg lazyimg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]}/>
-      }
-    }
-    else{
-      if (idf) return <li data-iid={idf} key={'img'+idf} className="himg-item lazyimg" data-imgsrc={img}></li>
-      return <div className="himg lazyimg" data-imgsrc={img} ></div>
-    }
-  }
+  // const hoc = this.hoc || []
+  // if ( hoc.indexOf('scroll') >-1 ){
+  //   if (img.indexOf('$$$')>-1){
+  //     var tmp = img.split('$$$')
+  //     if (tmp.length===2){
+  //       if (idf) return <li key={'img'+idf} className='himg-item lazyimg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} />
+  //       return <div className='himg lazyimg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]}/>
+  //     }
+  //   }
+  //   else{
+  //     if (idf) return <li data-iid={idf} key={'img'+idf} className="himg-item lazyimg" data-imgsrc={img}></li>
+  //     return <div className="himg lazyimg" data-imgsrc={img} ></div>
+  //   }
+  // }
   if (img.indexOf('$$$')>-1){
     var tmp = img.split('$$$')
     if (tmp.length===2){
-      if (idf) return <li key={'img'+idf} className='himg-item'><img data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} src={tmp[0]}/></li>
-      return <img className='himg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} src={tmp[0]}/>
+      if (idf) return <li key={'img'+idf} className='himg-item lazyimg'><img data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} src={tmp[0]}/></li>
+      return <img className='himg lazyimg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} src={tmp[0]}/>
     }
   }
   else{
@@ -158,6 +160,9 @@ function dealWithData(state){
        var dotDom;
        var liDom;
 
+       var __keys = [];
+       var __sorts = [];
+
        if (typeof data == 'string' || typeof data== 'number' || React.isValidElement(data)) {
          data = {title: data}
        }
@@ -172,9 +177,6 @@ function dealWithData(state){
        var ref = _state.foxref
        var k1 = data.id||'',
          v1 = data.url||'javascript:void();',
-        //  k2 = data.title||data.caption||data.catName||data.text||
-        //      data.model||data.quality||data.vender||
-        //      (typeof data==='string'||typeof data==='number'||React.isValidElement(data)?data:'')||'',
          k2 = data.title||data.caption||data.catName||data.text||data.model||data.quality||data.vender||'',
          v2 = data.attr||'',
          k3, v3 = data.value||'',
@@ -341,15 +343,59 @@ function dealWithData(state){
 
        if (k3) liDom = k3
 
-       if(k2 || k3 || k4){
-         headerDom = liDom
-         ? (data.img && Array.isArray(data.img)
-           ? <div className={"hheader"}>{k2}{liDom}{k4}</div>
-           : <div className={"hheader"}>{k2}{k4}{liDom}</div>)
-         : (data.img
-           ? <div className={"hheader"}>{k2}{k4}</div>
-           : <div className={"hheader"}>{k2}</div>)
+       if (isPlainObject(data)) {
+         __sorts = []
+         const accessSortsKeys = ['title', 'img', 'li']
+         Object.keys(data).forEach( function(key, ii){
+           if (accessSortsKeys.indexOf(key)>-1) __sorts.push(key)
+         })
+
+         const len = __sorts.length
+         if (len) {
+           if (len == 1) __sorts = __sorts.concat([undefined, undefined])
+           if (len ==2) __sorts = __sorts.concat(undefined)
+         } else {
+           __sorts = [undefined, undefined, undefined]
+         }
        }
+
+       // 排序header的三个部件，title, img, li
+       function sortMyHead(){
+         return __sorts.map(function(item) { 
+           switch (item) {
+             case 'title':
+               return k2 ? k2 : undefined
+               break;
+             case 'img':
+               return k4 ? k4 : undefined
+               break;
+             case 'li':
+               return liDom ? liDom : undefined
+               break;
+            }
+         })
+       }
+
+       if (k2 || k3 || k4) {
+         const sortDom = sortMyHead()
+         headerDom = (
+           <div className={"hheader"}>
+             {sortDom[0]}
+             {sortDom[1]}
+             {sortDom[2]}
+           </div>
+         )
+       }
+
+      //  if(k2 || k3 || k4){
+      //    headerDom = liDom
+      //    ? (data.img && Array.isArray(data.img)
+      //      ? <div className={"hheader"}>{k2}{liDom}{k4}</div>
+      //      : <div className={"hheader"}>{k2}{k4}{liDom}</div>)
+      //    : (data.img
+      //      ? <div className={"hheader"}>{k2}{k4}</div>
+      //      : <div className={"hheader"}>{k2}</div>)
+      //  }
 
        if(bodys.length){
          bodyDom = data.img && Array.isArray(data.img)

@@ -1,12 +1,12 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var cloneDeep = Aotoo.cloneDeep;
 var merge = Aotoo.merge;
 var uniqueId = Aotoo.uniqueId;
+var isPlainObject = Aotoo.isPlainObject;
+var filter = Aotoo.filter;
 
 var mapKeys = function mapKeys(obj, cb) {
   var keys = Object.keys(obj);
@@ -15,37 +15,38 @@ var mapKeys = function mapKeys(obj, cb) {
   });
 };
 
-var isPlainObject = function isPlainObject(obj) {
-  if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) == 'object') {
-    return !Array.isArray(obj);
-  }
-};
+// var isPlainObject = function(obj){
+//   if (typeof obj == 'object') {
+//     return !Array.isArray(obj)
+//   }
+// }
 
 var itemrootCkb = React.createElement('input', { type: 'checkbox', className: 'itemrootCkb' });
 
 function lazyimg(img, idf) {
-  var hoc = this.hoc || [];
-  if (hoc.indexOf('scroll') > -1) {
-    if (img.indexOf('$$$') > -1) {
-      var tmp = img.split('$$$');
-      if (tmp.length === 2) {
-        if (idf) return React.createElement('li', { key: 'img' + idf, className: 'himg-item lazyimg', 'data-imgsrc': tmp[1], 'data-imgtmp': tmp[0] });
-        return React.createElement('div', { className: 'himg lazyimg', 'data-imgsrc': tmp[1], 'data-imgtmp': tmp[0] });
-      }
-    } else {
-      if (idf) return React.createElement('li', { 'data-iid': idf, key: 'img' + idf, className: 'himg-item lazyimg', 'data-imgsrc': img });
-      return React.createElement('div', { className: 'himg lazyimg', 'data-imgsrc': img });
-    }
-  }
+  // const hoc = this.hoc || []
+  // if ( hoc.indexOf('scroll') >-1 ){
+  //   if (img.indexOf('$$$')>-1){
+  //     var tmp = img.split('$$$')
+  //     if (tmp.length===2){
+  //       if (idf) return <li key={'img'+idf} className='himg-item lazyimg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} />
+  //       return <div className='himg lazyimg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]}/>
+  //     }
+  //   }
+  //   else{
+  //     if (idf) return <li data-iid={idf} key={'img'+idf} className="himg-item lazyimg" data-imgsrc={img}></li>
+  //     return <div className="himg lazyimg" data-imgsrc={img} ></div>
+  //   }
+  // }
   if (img.indexOf('$$$') > -1) {
     var tmp = img.split('$$$');
     if (tmp.length === 2) {
       if (idf) return React.createElement(
         'li',
-        { key: 'img' + idf, className: 'himg-item' },
+        { key: 'img' + idf, className: 'himg-item lazyimg' },
         React.createElement('img', { 'data-imgsrc': tmp[1], 'data-imgtmp': tmp[0], src: tmp[0] })
       );
-      return React.createElement('img', { className: 'himg', 'data-imgsrc': tmp[1], 'data-imgtmp': tmp[0], src: tmp[0] });
+      return React.createElement('img', { className: 'himg lazyimg', 'data-imgsrc': tmp[1], 'data-imgtmp': tmp[0], src: tmp[0] });
     }
   } else {
     if (idf) return React.createElement(
@@ -169,6 +170,24 @@ function dealWithData(state) {
 
   if (data) {
     if (!Array.isArray(data)) {
+
+      // 排序header的三个部件，title, img, li
+      var sortMyHead = function sortMyHead() {
+        return __sorts.map(function (item) {
+          switch (item) {
+            case 'title':
+              return k2 ? k2 : undefined;
+              break;
+            case 'img':
+              return k4 ? k4 : undefined;
+              break;
+            case 'li':
+              return liDom ? liDom : undefined;
+              break;
+          }
+        });
+      };
+
       var body;
       var footer;
       var dot;
@@ -182,6 +201,9 @@ function dealWithData(state) {
       var footerDom;
       var dotDom;
       var liDom;
+
+      var __keys = [];
+      var __sorts = [];
 
       if (typeof data == 'string' || typeof data == 'number' || React.isValidElement(data)) {
         data = { title: data };
@@ -197,11 +219,7 @@ function dealWithData(state) {
       var ref = _state.foxref;
       var k1 = data.id || '',
           v1 = data.url || 'javascript:void();',
-
-      //  k2 = data.title||data.caption||data.catName||data.text||
-      //      data.model||data.quality||data.vender||
-      //      (typeof data==='string'||typeof data==='number'||React.isValidElement(data)?data:'')||'',
-      k2 = data.title || data.caption || data.catName || data.text || data.model || data.quality || data.vender || '',
+          k2 = data.title || data.caption || data.catName || data.text || data.model || data.quality || data.vender || '',
           v2 = data.attr || '',
           k3,
           v3 = data.value || '',
@@ -438,30 +456,42 @@ function dealWithData(state) {
 
       if (k3) liDom = k3;
 
+      if (isPlainObject(data)) {
+        __sorts = [];
+        var accessSortsKeys = ['title', 'img', 'li'];
+        Object.keys(data).forEach(function (key, ii) {
+          if (accessSortsKeys.indexOf(key) > -1) __sorts.push(key);
+        });
+
+        var len = __sorts.length;
+        if (len) {
+          if (len == 1) __sorts = __sorts.concat([undefined, undefined]);
+          if (len == 2) __sorts = __sorts.concat(undefined);
+        } else {
+          __sorts = [undefined, undefined, undefined];
+        }
+      }
+
       if (k2 || k3 || k4) {
-        headerDom = liDom ? data.img && Array.isArray(data.img) ? React.createElement(
+        var sortDom = sortMyHead();
+        headerDom = React.createElement(
           'div',
           { className: "hheader" },
-          k2,
-          liDom,
-          k4
-        ) : React.createElement(
-          'div',
-          { className: "hheader" },
-          k2,
-          k4,
-          liDom
-        ) : data.img ? React.createElement(
-          'div',
-          { className: "hheader" },
-          k2,
-          k4
-        ) : React.createElement(
-          'div',
-          { className: "hheader" },
-          k2
+          sortDom[0],
+          sortDom[1],
+          sortDom[2]
         );
       }
+
+      //  if(k2 || k3 || k4){
+      //    headerDom = liDom
+      //    ? (data.img && Array.isArray(data.img)
+      //      ? <div className={"hheader"}>{k2}{liDom}{k4}</div>
+      //      : <div className={"hheader"}>{k2}{k4}{liDom}</div>)
+      //    : (data.img
+      //      ? <div className={"hheader"}>{k2}{k4}</div>
+      //      : <div className={"hheader"}>{k2}</div>)
+      //  }
 
       if (bodys.length) {
         bodyDom = data.img && Array.isArray(data.img) ? React.createElement(
