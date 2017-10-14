@@ -37,12 +37,12 @@ function lazyimg(img, idf){
   if (img.indexOf('$$$')>-1){
     var tmp = img.split('$$$')
     if (tmp.length===2){
-      if (idf) return <li key={'img'+idf} className='himg-item lazyimg'><img data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} src={tmp[0]}/></li>
+      if (idf||idf==0) return <li key={'img'+idf} className='himg-item lazyimg'><img data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} src={tmp[0]}/></li>
       return <img className='himg lazyimg' data-imgsrc={tmp[1]} data-imgtmp={tmp[0]} src={tmp[0]}/>
     }
   }
   else{
-    if (idf) return <li data-iid={idf} key={'img'+idf} className="himg-item" ><img data-imgsrc={img} src={img}/></li>
+    if (idf||idf==0) return <li data-iid={idf} key={'img'+idf} className="himg-item" ><img data-imgsrc={img} src={img}/></li>
     return <img className="himg" data-imgsrc={img} src={img}/>
   }
 }

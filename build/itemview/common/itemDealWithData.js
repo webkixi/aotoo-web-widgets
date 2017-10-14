@@ -41,7 +41,7 @@ function lazyimg(img, idf) {
   if (img.indexOf('$$$') > -1) {
     var tmp = img.split('$$$');
     if (tmp.length === 2) {
-      if (idf) return React.createElement(
+      if (idf || idf == 0) return React.createElement(
         'li',
         { key: 'img' + idf, className: 'himg-item lazyimg' },
         React.createElement('img', { 'data-imgsrc': tmp[1], 'data-imgtmp': tmp[0], src: tmp[0] })
@@ -49,7 +49,7 @@ function lazyimg(img, idf) {
       return React.createElement('img', { className: 'himg lazyimg', 'data-imgsrc': tmp[1], 'data-imgtmp': tmp[0], src: tmp[0] });
     }
   } else {
-    if (idf) return React.createElement(
+    if (idf || idf == 0) return React.createElement(
       'li',
       { 'data-iid': idf, key: 'img' + idf, className: 'himg-item' },
       React.createElement('img', { 'data-imgsrc': img, src: img })
