@@ -39,7 +39,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 // let idrecode = {}
 
-var filter = Aotoo.filter;
+var filter = $Aotoo.filter;
 var idrecode = [];
 function subTree(item, dataAry, deep) {
 	deep = deep || 1;

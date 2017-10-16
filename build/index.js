@@ -4,6 +4,7 @@ var isClient = Aotoo.isClient;
 var context = function (C) {
   return C ? window : global;
 }(isClient) || {};
+context.$Aotoo = context.Aotoo;
 var transTree = require('./tree');
 
 function $item(props, isreact) {
@@ -25,10 +26,10 @@ function $tree(props) {
   }
 }
 
-Aotoo.plugins('item', $item);
-Aotoo.plugins('list', $list);
-Aotoo.plugins('tree', $tree);
-Aotoo.plugins('transTree', transTree);
+$Aotoo.plugins('item', $item);
+$Aotoo.plugins('list', $list);
+$Aotoo.plugins('tree', $tree);
+$Aotoo.plugins('transTree', transTree);
 
 module.exports = {};
 //# sourceMappingURL=maps/index.js.map
