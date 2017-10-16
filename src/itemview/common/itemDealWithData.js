@@ -50,39 +50,71 @@ function lazyimg(img, idf){
 // 处理title及url
 // 处理li的相关数据
 function normalItem(obj){
-  if (typeof obj === 'string' || typeof obj === 'number' || React.isValidElement(obj)) return obj
-  else if (Array.isArray(obj)){
-    return dealWithLi(obj)
+  let title
+  if (typeof obj == 'string' || typeof obj == 'number' || React.isValidElement(obj)) {
+    title = obj
   } else {
-    if (obj.title){
-      let title = obj.title
-      if (obj.url && (typeof title == 'string' || typeof title == 'number')) {
-        title = <a className='htitle' href={obj.url} >{obj.title}</a>
-      }
-      if (obj.li){
-        let _title = title
-        if (typeof title == 'string' || typeof title == 'number') {
-          _title = <span className="caption">{title}</span>
+    if (isPlainObject(obj)) {
+      title = obj.title
+
+      if (typeof title === 'string' || typeof title === 'number') {
+        if (typeof obj.url == 'string') {
+          title = <a className='htitle' href={obj.url} >{obj.title}</a>
         }
+      }
+
+      if (obj.li) {
         title = (
           <div className='itemCategory'>
             {itemrootCkb}
-            {_title}
+            <div className="caption">{title}</div>
             {dealWithLi(obj.li)}
           </div>
         )
       }
-      return title;
     }
-    else if (obj.li) return dealWithLi(obj.li)
-    return '';
   }
+  return title
 }
 
-function dealWithLi(prop_li, liClassName){
+
+// function normalItem(obj){
+//   if (typeof obj === 'string' || typeof obj === 'number' || React.isValidElement(obj)) return obj
+//   else if (Array.isArray(obj)){
+//     return dealWithLi(obj)
+//   } else {
+//     if (obj.title){
+//       let title = obj.title
+//       if (obj.url && (typeof title == 'string' || typeof title == 'number')) {
+//         title = <a className='htitle' href={obj.url} >{obj.title}</a>
+//       }
+//       if (obj.li){
+//         let _title = title
+//         if (typeof title == 'string' || typeof title == 'number') {
+//           _title = <span className="caption">{title}</span>
+//         }
+//         title = (
+//           <div className='itemCategory'>
+//             {itemrootCkb}
+//             {_title}
+//             {dealWithLi(obj.li)}
+//           </div>
+//         )
+//       }
+//       return title;
+//     }
+//     else if (obj.li) return dealWithLi(obj.li)
+//     return '';
+//   }
+// }
+
+function dealWithLi(prop_li, liClassName='property-ul'){
   var lis = []
   if(Array.isArray(prop_li)){
     prop_li.map(function(li_item, li_i){
+      if (typeof li_item != 'object') {
+        li_item = {title: li_item}
+      }
       var _item = normalItem(li_item);
       var _liItem;
       var _props = { "key": uniqueId('li-') }
@@ -124,7 +156,9 @@ function dealWithLi(prop_li, liClassName){
   }
   else{
     lis.push(<li key={'li-'+li_i}>{prop_li}</li>)
-    return <ul>{lis}</ul>
+    return React.createElement('ul', {
+      className: liClassName
+    }, lis)
   }
 }
 
@@ -191,7 +225,11 @@ function dealWithData(state){
        }
 
        if(data.li){
-         k3 = dealWithLi(data.li, data.liClassName)
+         let property_ul_className = 'property-ul'
+         if (data.liClassName) {
+           property_ul_className += ' ' + data.liClassName
+         }
+         k3 = dealWithLi(data.li, property_ul_className)
        }
 
        if(data.img){
@@ -232,7 +270,11 @@ function dealWithData(state){
                    return  <div key={'bodyk-'+i} data-pid={i} className={cls}>{title}{item.k}{item.v}</div>
                  }
                  if (item.li){  //li结构
-                   var lis = dealWithLi(item.li)
+                   let property_ul_className = 'property-ul'
+                   if (item.liClassName) {
+                     property_ul_className += ' ' + item.liClassName
+                   }
+                   var lis = dealWithLi(item.li, property_ul_className)
                    return <div key={'bodyul-'+i} className={cls}>{title}{lis}</div>
                  }
                  return title
@@ -275,7 +317,11 @@ function dealWithData(state){
                        return <div data-pid={i} key={'footer'+i} className={cls}>{title}{item.k}{item.v}</div>
                      }
                      if (item.li){  //li结构
-                       var lis = dealWithLi(item.li)
+                       let property_ul_className = 'property-ul'
+                       if (item.liClassName) {
+                         property_ul_className += ' ' + item.liClassName
+                       }
+                       var lis = dealWithLi(item.li, property_ul_className)
                        return <div key={'footerul'+i} className={cls}>{title}{lis}</div>
                      }
                      return title

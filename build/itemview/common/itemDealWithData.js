@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var cloneDeep = Aotoo.cloneDeep;
@@ -61,45 +63,80 @@ function lazyimg(img, idf) {
 // 处理title及url
 // 处理li的相关数据
 function normalItem(obj) {
-  if (typeof obj === 'string' || typeof obj === 'number' || React.isValidElement(obj)) return obj;else if (Array.isArray(obj)) {
-    return dealWithLi(obj);
+  var title = void 0;
+  if (typeof obj == 'string' || typeof obj == 'number' || React.isValidElement(obj)) {
+    title = obj;
   } else {
-    if (obj.title) {
-      var title = obj.title;
-      if (obj.url && (typeof title == 'string' || typeof title == 'number')) {
-        title = React.createElement(
-          'a',
-          { className: 'htitle', href: obj.url },
-          obj.title
-        );
-      }
-      if (obj.li) {
-        var _title = title;
-        if (typeof title == 'string' || typeof title == 'number') {
-          _title = React.createElement(
-            'span',
-            { className: 'caption' },
-            title
+    if (isPlainObject(obj)) {
+      title = obj.title;
+
+      if (typeof title === 'string' || typeof title === 'number') {
+        if (typeof obj.url == 'string') {
+          title = React.createElement(
+            'a',
+            { className: 'htitle', href: obj.url },
+            obj.title
           );
         }
+      }
+
+      if (obj.li) {
         title = React.createElement(
           'div',
           { className: 'itemCategory' },
           itemrootCkb,
-          _title,
+          React.createElement(
+            'div',
+            { className: 'caption' },
+            title
+          ),
           dealWithLi(obj.li)
         );
       }
-      return title;
-    } else if (obj.li) return dealWithLi(obj.li);
-    return '';
+    }
   }
+  return title;
 }
 
-function dealWithLi(prop_li, liClassName) {
+// function normalItem(obj){
+//   if (typeof obj === 'string' || typeof obj === 'number' || React.isValidElement(obj)) return obj
+//   else if (Array.isArray(obj)){
+//     return dealWithLi(obj)
+//   } else {
+//     if (obj.title){
+//       let title = obj.title
+//       if (obj.url && (typeof title == 'string' || typeof title == 'number')) {
+//         title = <a className='htitle' href={obj.url} >{obj.title}</a>
+//       }
+//       if (obj.li){
+//         let _title = title
+//         if (typeof title == 'string' || typeof title == 'number') {
+//           _title = <span className="caption">{title}</span>
+//         }
+//         title = (
+//           <div className='itemCategory'>
+//             {itemrootCkb}
+//             {_title}
+//             {dealWithLi(obj.li)}
+//           </div>
+//         )
+//       }
+//       return title;
+//     }
+//     else if (obj.li) return dealWithLi(obj.li)
+//     return '';
+//   }
+// }
+
+function dealWithLi(prop_li) {
+  var liClassName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'property-ul';
+
   var lis = [];
   if (Array.isArray(prop_li)) {
     prop_li.map(function (li_item, li_i) {
+      if ((typeof li_item === 'undefined' ? 'undefined' : _typeof(li_item)) != 'object') {
+        li_item = { title: li_item };
+      }
       var _item = normalItem(li_item);
       var _liItem;
       var _props = { "key": uniqueId('li-') };
@@ -144,11 +181,9 @@ function dealWithLi(prop_li, liClassName) {
       { key: 'li-' + li_i },
       prop_li
     ));
-    return React.createElement(
-      'ul',
-      null,
-      lis
-    );
+    return React.createElement('ul', {
+      className: liClassName
+    }, lis);
   }
 }
 
@@ -243,7 +278,11 @@ function dealWithData(state) {
       }
 
       if (data.li) {
-        k3 = dealWithLi(data.li, data.liClassName);
+        var property_ul_className = 'property-ul';
+        if (data.liClassName) {
+          property_ul_className += ' ' + data.liClassName;
+        }
+        k3 = dealWithLi(data.li, property_ul_className);
       }
 
       if (data.img) {
@@ -304,7 +343,11 @@ function dealWithData(state) {
                 }
                 if (item.li) {
                   //li结构
-                  var lis = dealWithLi(item.li);
+                  var _property_ul_className = 'property-ul';
+                  if (item.liClassName) {
+                    _property_ul_className += ' ' + item.liClassName;
+                  }
+                  var lis = dealWithLi(item.li, _property_ul_className);
                   return React.createElement(
                     'div',
                     { key: 'bodyul-' + i, className: cls },
@@ -366,7 +409,11 @@ function dealWithData(state) {
                 }
                 if (item.li) {
                   //li结构
-                  var lis = dealWithLi(item.li);
+                  var _property_ul_className2 = 'property-ul';
+                  if (item.liClassName) {
+                    _property_ul_className2 += ' ' + item.liClassName;
+                  }
+                  var lis = dealWithLi(item.li, _property_ul_className2);
                   return React.createElement(
                     'div',
                     { key: 'footerul' + i, className: cls },
