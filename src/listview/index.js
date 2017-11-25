@@ -3,13 +3,14 @@
 * 返回 div > (ul > li)*n
 */
 const cloneDeep = Aotoo.cloneDeep
+const merge = Aotoo.merge
 const Fox = require('../itemview/foxli')
 
 class TmpApp extends React.Component {
 	constructor(props){
 		super(props)
 		this._dealWithData = this::this._dealWithData
-		this._dealWithItemView = this::this._dealWithItemView
+		// this._dealWithItemView = this::this._dealWithItemView
 		this.listMethod = this::this.listMethod
 	}
 
@@ -24,32 +25,41 @@ class TmpApp extends React.Component {
 		}
 	}
 
-	_dealWithItemView(opts){
-		var that = this;
-		var props = cloneDeep(that.props);
-		props.idf = opts.i;
-		props.key = 'fox'+opts.i;
-		props.data = opts.item;
+	// _dealWithItemView(index, item, props={}){
+	// 	const listOperate = {
+	// 		// parent: this.getListDom
+	// 	}
 
-		const listOperate = {
-			// parent: this.getListDom
-		}
+	// 	if (item.itemMethod) {
+	// 		props.itemMethod = item.itemMethod || props.itemMethod
+	// 		delete item.itemMethod
+	// 	}
+	// 	return <Fox foxref={"child_"+index} operate={listOperate} idf={index} {...props} />;
+	// }
+
+	_dealWithData(data){
+		var props = merge({}, this.props);
+		const stateData = props.data
 
 		//删除多余的属性
 		delete props.listClass;
 		delete props.listMethod;
 		delete props.onscrollend;
-
-		if (opts.item.itemMethod) {
-			props.itemMethod = opts.item.itemMethod || props.itemMethod
-			delete opts.item.itemMethod
-		}
-		return <Fox foxref={"child_"+opts.i} operate={listOperate} idf={opts.i} {...props} data={opts.item} />;
-	}
-
-	_dealWithData(data){
-		const stateData = this.props.data
-		const items = stateData.map((item, ii) => this._dealWithItemView({i: ii, item: item}))
+		delete props.data
+		
+		const items = stateData.map(
+			(item, ii) => {
+				props.idf = ii
+				props.key = 'fox'+ii
+				props.data = item
+				if (item.itemMethod) {
+					props.itemMethod = item.itemMethod
+					delete item.itemMethod
+				}
+				const listOperate = {} //{ // parent: this.getListDom }
+				return <Fox foxref={"child_"+ii} operate={listOperate} idf={ii} {...props} />;
+			}
+		)
 		return items.length ? <ul className="hlist"> {items} </ul> : ''
 	}
 

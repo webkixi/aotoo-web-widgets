@@ -15,6 +15,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 * 返回 div > (ul > li)*n
 */
 var cloneDeep = Aotoo.cloneDeep;
+var merge = Aotoo.merge;
 var Fox = require('../itemview/foxli');
 
 var TmpApp = function (_React$Component) {
@@ -26,7 +27,7 @@ var TmpApp = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (TmpApp.__proto__ || Object.getPrototypeOf(TmpApp)).call(this, props));
 
 		_this._dealWithData = _this._dealWithData.bind(_this);
-		_this._dealWithItemView = _this._dealWithItemView.bind(_this);
+		// this._dealWithItemView = this::this._dealWithItemView
 		_this.listMethod = _this.listMethod.bind(_this);
 		return _this;
 	}
@@ -44,38 +45,41 @@ var TmpApp = function (_React$Component) {
 				lmd(that, this.props.store);
 			}
 		}
-	}, {
-		key: '_dealWithItemView',
-		value: function _dealWithItemView(opts) {
-			var that = this;
-			var props = cloneDeep(that.props);
-			props.idf = opts.i;
-			props.key = 'fox' + opts.i;
-			props.data = opts.item;
 
-			var listOperate = {}
-			// parent: this.getListDom
+		// _dealWithItemView(index, item, props={}){
+		// 	const listOperate = {
+		// 		// parent: this.getListDom
+		// 	}
 
+		// 	if (item.itemMethod) {
+		// 		props.itemMethod = item.itemMethod || props.itemMethod
+		// 		delete item.itemMethod
+		// 	}
+		// 	return <Fox foxref={"child_"+index} operate={listOperate} idf={index} {...props} />;
+		// }
 
-			//删除多余的属性
-			;delete props.listClass;
-			delete props.listMethod;
-			delete props.onscrollend;
-
-			if (opts.item.itemMethod) {
-				props.itemMethod = opts.item.itemMethod || props.itemMethod;
-				delete opts.item.itemMethod;
-			}
-			return React.createElement(Fox, _extends({ foxref: "child_" + opts.i, operate: listOperate, idf: opts.i }, props, { data: opts.item }));
-		}
 	}, {
 		key: '_dealWithData',
 		value: function _dealWithData(data) {
-			var _this2 = this;
+			var props = merge({}, this.props);
+			var stateData = props.data;
 
-			var stateData = this.props.data;
+			//删除多余的属性
+			delete props.listClass;
+			delete props.listMethod;
+			delete props.onscrollend;
+			delete props.data;
+
 			var items = stateData.map(function (item, ii) {
-				return _this2._dealWithItemView({ i: ii, item: item });
+				props.idf = ii;
+				props.key = 'fox' + ii;
+				props.data = item;
+				if (item.itemMethod) {
+					props.itemMethod = item.itemMethod;
+					delete item.itemMethod;
+				}
+				var listOperate = {}; //{ // parent: this.getListDom }
+				return React.createElement(Fox, _extends({ foxref: "child_" + ii, operate: listOperate, idf: ii }, props));
 			});
 			return items.length ? React.createElement(
 				'ul',
