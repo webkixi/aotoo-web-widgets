@@ -6,15 +6,15 @@ var context = function (C) {
 }(isClient) || {};
 context.$Aotoo = context.Aotoo;
 var transTree = require('./tree');
+var Item = require('./itemview/foxdiv');
+var List = require('./listview');
 
 function $item(props, isreact) {
-  var Item = require('./itemview/foxdiv');
   if (!props) return Item;
   return React.createElement(Item, props);
 }
 
 function $list(props, isreact) {
-  var List = require('./listview');
   if (!props) return List;
   return React.createElement(List, props);
 }

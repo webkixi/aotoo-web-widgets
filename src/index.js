@@ -2,15 +2,15 @@ var isClient = Aotoo.isClient
 var context = ( C => C ? window : global)(isClient) || {}
 context.$Aotoo = context.Aotoo
 const transTree = require('./tree')
+const Item = require('./itemview/foxdiv')
+const List = require('./listview')
 
 function $item(props, isreact){
-  const Item = require('./itemview/foxdiv')
   if (!props) return Item
   return <Item {...props} />
 }
 
 function $list(props, isreact){
-  const List = require('./listview')
   if (!props) return List
   return <List {...props} />
 }

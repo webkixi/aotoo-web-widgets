@@ -256,9 +256,10 @@ function dealWithData(state){
              if(!React.isValidElement(item)){
                var title = item.title||item.caption||item.text;
                if (React.isValidElement(title)) {
-                 let props = cloneDeep(title.props)
-                 props.key = 'body_'+i
-                 title = React.createElement(title.type, props)
+                //  let props = cloneDeep(title.props)
+                //  props.key = 'body_'+i
+                //  title = React.createElement(title.type, props)
+                 title = React.cloneElement(title, {key: 'body_'+i})
                }
                else
                if ( (typeof title==='string'||typeof title=='number') && typeof item.url==='string' ){
@@ -302,9 +303,10 @@ function dealWithData(state){
                  if(!React.isValidElement(item)){
                    var title = item.title||item.caption||item.text;
                    if (React.isValidElement(title)) {
-                     let props = cloneDeep(title.props)
-                     props.key = 'footer_'+i
-                     title = React.createElement(title.type, props)
+                    //  let props = cloneDeep(title.props)
+                    //  props.key = 'footer_'+i
+                    //  title = React.createElement(title.type, props)
+                    title = React.cloneElement(title, {key: 'footer_'+i})
                    }
                    else
                    if ( (typeof title==='string'||typeof title=='number') && typeof item.url==='string' ){
@@ -347,10 +349,13 @@ function dealWithData(state){
                if(isPlainObject(item)){
                  if(React.isValidElement(item)){
                    var it = item;
-                   var props = cloneDeep(it.props)
-                   var styl = props.style;
-                   delete props.style;
-                   var tmp = React.createElement(it.type, props, it.props.children)
+                  //  var props = cloneDeep(it.props)
+                  //  var styl = props.style;
+                  //  delete props.style;
+                  //  var tmp = React.createElement(it.type, props, it.props.children)
+
+                   var styl = props.style
+                   var tmp = React.cloneElement(it, {style: {}})
                    dots.push(<div data-did={i} key={'dot'+i} className={'dot'} style={styl}>{tmp}</div>)
                  }
                  else {
