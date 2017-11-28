@@ -14,8 +14,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 * list 通用组件
 * 返回 div > (ul > li)*n
 */
-var cloneDeep = Aotoo.cloneDeep;
-var merge = Aotoo.merge;
+var cloneDeep = $Aotoo.cloneDeep;
+var merge = $Aotoo.merge;
 var Fox = require('../itemview/foxli');
 
 var TmpApp = function (_React$Component) {

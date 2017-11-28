@@ -80,4 +80,4 @@ class fox extends React.Component {
 	}
 }
 
-module.exports = Aotoo.wrap(fox);
+module.exports = $Aotoo.wrap(fox);

@@ -4,11 +4,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var cloneDeep = Aotoo.cloneDeep;
-var merge = Aotoo.merge;
-var uniqueId = Aotoo.uniqueId;
-var isPlainObject = Aotoo.isPlainObject;
-var filter = Aotoo.filter;
+var cloneDeep = $Aotoo.cloneDeep;
+var merge = $Aotoo.merge;
+var uniqueId = $Aotoo.uniqueId;
+var isPlainObject = $Aotoo.isPlainObject;
+var filter = $Aotoo.filter;
 
 var mapKeys = function mapKeys(obj, cb) {
   var keys = Object.keys(obj);
