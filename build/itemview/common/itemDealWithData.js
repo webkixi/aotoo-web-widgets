@@ -360,9 +360,9 @@ function dealWithData(state) {
               }();
               bodys.push(ppp);
             } else {
-              var _props2 = merge({}, item.props);
-              _props2.key = 'bodyitem_' + i;
-              bodys.push(React.createElement(item.type, _props2));
+              var props = merge({}, item.props);
+              props.key = 'bodyitem_' + i;
+              bodys.push(React.createElement(item.type, props));
             }
           }
         });
@@ -427,9 +427,9 @@ function dealWithData(state) {
               }();
               footers.push(ppp);
             } else {
-              var _props3 = merge({}, item.props);
-              _props3.key = 'footer_' + i;
-              footers.push(React.createElement(item.type, _props3));
+              var props = merge({}, item.props);
+              props.key = 'footer_' + i;
+              footers.push(React.createElement(item.type, props));
             }
           }
         });
@@ -457,7 +457,7 @@ function dealWithData(state) {
               //  delete props.style;
               //  var tmp = React.createElement(it.type, props, it.props.children)
 
-              var styl = props.style;
+              var styl = it.props.style;
               var tmp = React.cloneElement(it, { style: {} });
               dots.push(React.createElement(
                 'div',

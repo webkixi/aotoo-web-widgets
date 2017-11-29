@@ -354,7 +354,7 @@ function dealWithData(state){
                   //  delete props.style;
                   //  var tmp = React.createElement(it.type, props, it.props.children)
 
-                   var styl = props.style
+                   var styl = it.props.style
                    var tmp = React.cloneElement(it, {style: {}})
                    dots.push(<div data-did={i} key={'dot'+i} className={'dot'} style={styl}>{tmp}</div>)
                  }
