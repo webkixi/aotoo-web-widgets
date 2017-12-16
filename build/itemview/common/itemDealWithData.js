@@ -40,6 +40,9 @@ function lazyimg(img, idf) {
   //     return <div className="himg lazyimg" data-imgsrc={img} ></div>
   //   }
   // }
+  if (React.isValidElement(img)) {
+    return img;
+  }
   if (img.indexOf('$$$') > -1) {
     var tmp = img.split('$$$');
     if (tmp.length === 2) {
