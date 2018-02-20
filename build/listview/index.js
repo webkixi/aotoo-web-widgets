@@ -74,7 +74,7 @@ var TmpApp = function (_React$Component) {
 				props.idf = ii;
 				props.key = 'fox' + ii;
 				props.data = item;
-				if (item.itemMethod) {
+				if (item && item.itemMethod) {
 					props.itemMethod = item.itemMethod;
 					delete item.itemMethod;
 				}
