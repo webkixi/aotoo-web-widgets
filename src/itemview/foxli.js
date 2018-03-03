@@ -3,7 +3,7 @@ itemView
 放回 li 结构, 用于modules/list 调用，作为ul/li部分
 */
 // const React = (typeof React != 'undefined' ? React : require('react'))
-var dealWithDataMethod = require('./common/itemDealWithData')
+var dealWithDataMethod = require('./common/itemDealWithDataX')
 
 function getClass(resault){
 	const state = this.props
@@ -70,11 +70,10 @@ class fox extends React.Component {
 		}
 
 		const _props = {
-			ref: ref
-			, id: k1
+			// ref: ref
+			id: k1
 			, style: sty
 			, className: getClass.call(self, this.resault)
-			// , key: uniqueId('fox_')
 		}
 		return <li {..._props} {...data_attr}>{fill}</li>
 	}

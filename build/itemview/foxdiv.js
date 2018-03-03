@@ -17,7 +17,7 @@ itemView
 放回 div 结构, 一般可以直接调用
 */
 // const React = (typeof React != 'undefined' ? React : require('react'))
-var dealWithDataMethod = require('./common/itemDealWithData');
+var dealWithDataMethod = require('./common/itemDealWithDataX');
 
 function getClass(resault) {
 	var state = this.props;
@@ -104,11 +104,10 @@ var fox = function (_React$Component) {
 			}
 
 			var _props = {
-				ref: ref,
+				// ref: ref
 				id: k1,
 				style: sty,
 				className: getClass.call(self, this.resault)
-				// , key: uniqueId('fox_')
 			};
 			return React.createElement(
 				'div',
