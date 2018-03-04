@@ -76,7 +76,7 @@ function lazyimg(img, idf){
     }
     result = <img {...img} />
     if (img.url) {
-      result = _url ? <a href={_url} target="_blank">{result}</a> : <a href={_url}>{result}</a>
+      result = _url ? <a href={_url} target="_blank">{result}</a> : <a href={img.url}>{result}</a>
     }
     if (img.attr) {
       result = React.cloneElement(result, { ...dataAttrs })

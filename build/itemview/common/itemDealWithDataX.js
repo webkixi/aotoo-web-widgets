@@ -86,7 +86,7 @@ function lazyimg(img, idf) {
         result
       ) : React.createElement(
         'a',
-        { href: _url },
+        { href: img.url },
         result
       );
     }
