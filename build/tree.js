@@ -58,7 +58,9 @@ function subTree(item, dataAry, deep) {
 			nsons = nsons.concat(son);
 		}
 	});
-	item.li = nsons;
+	if (nsons.length) {
+		item.li = nsons;
+	}
 	return item;
 }
 
@@ -67,7 +69,9 @@ function owerTree(item) {
 		if (Array.isArray(o)) return owerTree(item);
 		return o;
 	});
-	return { li: ary };
+	if (ary.length) {
+		return { li: ary };
+	}
 }
 
 // TreeStructor
@@ -93,7 +97,10 @@ module.exports = function (dataAry) {
 			}
 		}
 		if (Array.isArray(item)) {
-			menus.push(owerTree(item));
+			var _tmp = owerTree(item);
+			if (_tmp) {
+				menus.push(_tmp);
+			}
 		}
 	});
 	return menus;
