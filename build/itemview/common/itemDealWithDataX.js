@@ -253,8 +253,10 @@ function ItemPart(item, index, key, cls, type) {
 
       var subItem = function () {
         var tmp, temp, tmp_img, __imgs;
+        var part_img, part_li, part_k;
 
         if (item.img) {
+          part_img = true;
           if (Array.isArray(item.img)) {
             __imgs = item.img.map(function (pic, j) {
               return lazyimg.call(null, pic, j);
@@ -271,6 +273,7 @@ function ItemPart(item, index, key, cls, type) {
 
         if (item.k) {
           //k v结构
+          part_k = true;
           tmp = React.createElement(
             'div',
             { key: __key, 'data-pid': i, className: __cls },
@@ -283,6 +286,7 @@ function ItemPart(item, index, key, cls, type) {
 
         if (item.li) {
           //li结构
+          part_li = true;
           var property_ul_className = 'property-ul';
           if (item.liClass || item.liClassName) {
             property_ul_className += ' ' + (item.liClass || item.liClassName);
@@ -301,12 +305,22 @@ function ItemPart(item, index, key, cls, type) {
           temp = tmp;
         }
 
-        if (typeof title == 'string') {
-          temp = title;
+        if (typeof title == 'string' && !temp) {
+          temp = tmp_img ? React.createElement(
+            'div',
+            { key: __key, 'data-pid': i, className: __cls },
+            title,
+            tmp_img
+          ) : title;
         }
 
-        if (React.isValidElement(title)) {
-          temp = React.cloneElement(title, { key: __key });
+        if (React.isValidElement(title) && !temp) {
+          temp = tmp_img ? React.createElement(
+            'div',
+            { key: __key, 'data-pid': i, className: __cls },
+            title,
+            tmp_img
+          ) : React.cloneElement(title, { key: __key });
         }
 
         if (typeof temp == 'string') return temp;else {
