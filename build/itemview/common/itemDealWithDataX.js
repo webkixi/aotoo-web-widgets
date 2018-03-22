@@ -235,8 +235,16 @@ function ItemPart(item, index, key, cls, type) {
       var itemClass = item.itemClass || item.className;
       var itemStyle = item.itemStyle || item.style;
       var attr = item.attr;
+      var dataAttr = {};
+
       __cls = item.caption ? __cls + ' caption' : __cls;
       __cls = itemClass ? __cls + ' ' + itemClass : __cls;
+
+      if (isPlainObject(attr)) {
+        Object.keys(attr).forEach(function (key, ii) {
+          dataAttr['data-' + key] = attr[key];
+        });
+      }
 
       if (validSingleItem(title) && typeof item.url === 'string') {
         var _url = blankUrl(item.url);
@@ -323,20 +331,25 @@ function ItemPart(item, index, key, cls, type) {
           ) : React.cloneElement(title, { key: __key });
         }
 
-        if (typeof temp == 'string') return temp;else {
-          if (isPlainObject(itemStyle)) {
-            temp = React.cloneElement(temp, { style: itemStyle });
+        if (typeof temp == 'string') {
+          if (itemClass || itemStyle || dataAttr) {
+            var tempProps = typeof itemClass == 'string' ? merge({}, { className: __cls }) : {};
+            tempProps = isPlainObject(itemStyle) ? merge(tempProps, { style: itemStyle }) : tempProps;
+            tempProps = dataAttr ? _extends({}, tempProps, dataAttr) : tempProps;
+            return React.createElement(
+              'span',
+              tempProps,
+              temp
+            );
           }
-
-          if (isPlainObject(attr)) {
-            var dataAttr = {};
-            Object.keys(attr).forEach(function (key, ii) {
-              dataAttr['data-' + key] = attr[key];
-            });
-            temp = React.cloneElement(temp, _extends({}, dataAttr));
-          }
-
           return temp;
+        } else {
+          var itemProps = {};
+          if (isPlainObject(itemStyle)) {
+            itemProps['style'] = itemStyle;
+            // temp = React.cloneElement(temp, {style: itemStyle})
+          }
+          return React.cloneElement(temp, _extends({}, itemProps, dataAttr));
         }
       }();
 
