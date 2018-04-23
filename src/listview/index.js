@@ -2,7 +2,7 @@
 * list 通用组件
 * 返回 div > (ul > li)*n
 */
-// const cloneDeep = $Aotoo.cloneDeep
+// const cloneDeep = Aotoo.cloneDeep
 const merge = Aotoo.merge
 const Fox = require('../itemview/foxli')
 

@@ -78,4 +78,4 @@ class fox extends React.Component {
 		return <li {..._props} {...data_attr}>{fill}</li>
 	}
 }
-module.exports = $Aotoo.wrap(fox);
+module.exports = Aotoo.wrap(fox);

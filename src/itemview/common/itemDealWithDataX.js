@@ -1,9 +1,9 @@
-// const cloneDeep = $Aotoo.cloneDeep
+// const cloneDeep = Aotoo.cloneDeep
 const merge = Aotoo.merge
 const uniqueId = Aotoo.uniqueId
-// const isPlainObject = $Aotoo.isPlainObject
+// const isPlainObject = Aotoo.isPlainObject
 const isPlainObject = Aotoo.isObject
-// const filter = $Aotoo.filter
+// const filter = Aotoo.filter
 const itemrootCkb = <input type='checkbox' className='itemrootCkb'/>
 
 var mapKeys = function(obj, cb){

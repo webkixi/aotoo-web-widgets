@@ -1,8 +1,8 @@
-const cloneDeep = $Aotoo.cloneDeep
-const merge = $Aotoo.merge
-const uniqueId = $Aotoo.uniqueId
-const isPlainObject = $Aotoo.isPlainObject
-const filter = $Aotoo.filter
+const cloneDeep = Aotoo.cloneDeep
+const merge = Aotoo.merge
+const uniqueId = Aotoo.uniqueId
+const isPlainObject = Aotoo.isPlainObject
+const filter = Aotoo.filter
 
 var mapKeys = function(obj, cb){
   const keys = Object.keys(obj)

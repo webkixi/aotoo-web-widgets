@@ -120,5 +120,5 @@ var fox = function (_React$Component) {
 	return fox;
 }(React.Component);
 
-module.exports = $Aotoo.wrap(fox);
+module.exports = Aotoo.wrap(fox);
 //# sourceMappingURL=../maps/itemview/foxdiv.js.map

@@ -14,7 +14,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 * list 通用组件
 * 返回 div > (ul > li)*n
 */
-// const cloneDeep = $Aotoo.cloneDeep
+// const cloneDeep = Aotoo.cloneDeep
 var merge = Aotoo.merge;
 var Fox = require('../itemview/foxli');
 
