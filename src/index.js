@@ -1,6 +1,4 @@
 var isClient = Aotoo.isClient
-var context = ( C => C ? window : global)(isClient) || {}
-context.$Aotoo = context.Aotoo
 const transTree = require('./tree')
 const Item = require('./itemview/foxdiv')
 const List = require('./listview')
@@ -22,9 +20,9 @@ function $tree(props){
   }
 }
 
-$Aotoo.plugins('item', $item)
-$Aotoo.plugins('list', $list)
-$Aotoo.plugins('tree', $tree)
-$Aotoo.plugins('transTree', transTree)
+Aotoo.plugins('item', $item)
+Aotoo.plugins('list', $list)
+Aotoo.plugins('tree', $tree)
+Aotoo.plugins('transTree', transTree)
 
 module.exports = {}

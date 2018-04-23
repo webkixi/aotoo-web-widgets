@@ -35,7 +35,7 @@
 
 // let idrecode = {}
 
-const filter = $Aotoo.filter
+const filter = Aotoo.filter
 let idrecode = []
 function subTree(item, dataAry, deep){
 	deep = deep||1

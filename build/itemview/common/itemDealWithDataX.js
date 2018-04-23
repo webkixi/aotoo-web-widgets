@@ -4,11 +4,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var cloneDeep = $Aotoo.cloneDeep;
-var merge = $Aotoo.merge;
-var uniqueId = $Aotoo.uniqueId;
-var isPlainObject = $Aotoo.isPlainObject;
-var filter = $Aotoo.filter;
+// const cloneDeep = $Aotoo.cloneDeep
+var merge = Aotoo.merge;
+var uniqueId = Aotoo.uniqueId;
+// const isPlainObject = $Aotoo.isPlainObject
+var isPlainObject = Aotoo.isObject;
+// const filter = $Aotoo.filter
 var itemrootCkb = React.createElement('input', { type: 'checkbox', className: 'itemrootCkb' });
 
 var mapKeys = function mapKeys(obj, cb) {
