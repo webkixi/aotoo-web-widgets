@@ -79,7 +79,11 @@ module.exports = function(dataAry){
 			if (item['attr']) {
 				if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = ii
 			} else {
-				item['attr'] ={'data-treeid': ii}
+				if (item['$$typeof']) {
+					item = {title: item, attr: {'treeid': ii}}
+				} else {
+					item['attr'] ={'data-treeid': ii}
+				}
 			}
 			if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
 				item.itemClass = item.itemClass && item.itemClass.indexOf('level0') == -1 ? item.itemClass +' level0' : 'level0'
