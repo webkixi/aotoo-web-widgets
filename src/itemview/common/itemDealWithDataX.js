@@ -470,8 +470,8 @@ function dealWithData(state){
       : liDom
         ? k2
           ? ( React.isValidElement(k2)
-            ? <div className="itemCategory">{itemrootCkb}{k2}{liDom}</div>
-            : <div className="itemCategory">{itemrootCkb}<span className="caption">{k2}</span>{liDom}</div> )
+            ? <div className="itemCategory">{itemrootCkb}<div className="caption">{k2}</div>{liDom}</div>
+            : <div className="itemCategory">{itemrootCkb}<div className="caption">{k2}</div>{liDom}</div> )
           : liDom
         : k2
      )
