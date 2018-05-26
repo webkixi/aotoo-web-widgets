@@ -39,7 +39,7 @@ class TmpApp extends React.Component {
 
 	_dealWithData(data){
 		var props = merge({}, this.props);
-		const stateData = props.data
+		const stateData = props.data||[]
 
 		//删除多余的属性
 		delete props.listClass;

@@ -62,7 +62,7 @@ var TmpApp = function (_React$Component) {
 		key: '_dealWithData',
 		value: function _dealWithData(data) {
 			var props = merge({}, this.props);
-			var stateData = props.data;
+			var stateData = props.data || [];
 
 			//删除多余的属性
 			delete props.listClass;

@@ -575,14 +575,18 @@ function dealWithData(state) {
     'div',
     { className: 'itemCategory' },
     itemrootCkb,
-    k2,
+    React.createElement(
+      'div',
+      { className: 'caption' },
+      k2
+    ),
     liDom
   ) : React.createElement(
     'div',
     { className: 'itemCategory' },
     itemrootCkb,
     React.createElement(
-      'span',
+      'div',
       { className: 'caption' },
       k2
     ),
