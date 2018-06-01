@@ -13,10 +13,11 @@ function $list(props, isreact){
   return <List {...props} />
 }
 
-function $tree(props){
-  if ( Array.isArray(props.data) ) {
-    props.data = transTree(props.data)
-    return $list(props)
+function $tree(props) {
+  if (Array.isArray(props.data)) {
+    let _props = {...props}
+    _props.data = transTree(_props.data)
+    return <List {..._props} />
   }
 }
 

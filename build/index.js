@@ -1,5 +1,7 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var isClient = Aotoo.isClient;
 var transTree = require('./tree');
 var Item = require('./itemview/foxdiv');
@@ -17,8 +19,9 @@ function $list(props, isreact) {
 
 function $tree(props) {
   if (Array.isArray(props.data)) {
-    props.data = transTree(props.data);
-    return $list(props);
+    var _props = _extends({}, props);
+    _props.data = transTree(_props.data);
+    return React.createElement(List, _props);
   }
 }
 
