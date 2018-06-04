@@ -43,7 +43,7 @@ function subTree(item, dataAry, deep){
 	let sons = filter(dataAry, o => o.parent == item.idf)
 	sons.map( (son, ii) => {
 		// son.itemClass = son.itemClass&&son.itemClass.indexOf('level'+deep)==-1 ? son.itemClass +' level'+deep : son.itemClass
-		son.itemClass = son.itemClass ? son.itemClass.indexOf('level' + deep) == -1 ? son.itemClass + ' level' + deep : son.itemClass : 'level '+deep
+		son.itemClass = son.itemClass ? son.itemClass.indexOf('level' + deep) == -1 ? son.itemClass + ' level' + deep : son.itemClass : 'level'+deep
 		// son.itemClass = son.itemClass ? son.itemClass +' level'+deep : 'level'+deep
 		if (son.idf && idrecode.indexOf(son.idf) == -1) {
 			idrecode.push(son.idf)
