@@ -48,7 +48,8 @@ function subTree(item, dataAry, deep) {
 		return o.parent == item.idf;
 	});
 	sons.map(function (son, ii) {
-		son.itemClass = son.itemClass && son.itemClass.indexOf('level' + deep) == -1 ? son.itemClass + ' level' + deep : son.itemClass;
+		// son.itemClass = son.itemClass&&son.itemClass.indexOf('level'+deep)==-1 ? son.itemClass +' level'+deep : son.itemClass
+		son.itemClass = son.itemClass ? son.itemClass.indexOf('level' + deep) == -1 ? son.itemClass + ' level' + deep : son.itemClass : 'level ' + deep;
 		// son.itemClass = son.itemClass ? son.itemClass +' level'+deep : 'level'+deep
 		if (son.idf && idrecode.indexOf(son.idf) == -1) {
 			idrecode.push(son.idf);
@@ -92,7 +93,8 @@ module.exports = function (dataAry) {
 				}
 			}
 			if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
-				item.itemClass = item.itemClass && item.itemClass.indexOf('level0') == -1 ? item.itemClass + ' level0' : item.itemClass;
+				// item.itemClass = item.itemClass && item.itemClass.indexOf('level0') == -1 ? item.itemClass +' level0' : item.itemClass
+				item.itemClass = item.itemClass ? item.itemClass.indexOf('level0') == -1 ? item.itemClass + ' level0' : item.itemClass : 'level0';
 				// item.ref = item.idf
 				menus.push(subTree(item, dataAry));
 			}
