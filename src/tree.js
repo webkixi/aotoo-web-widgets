@@ -41,7 +41,7 @@ function subTree(item, dataAry, deep){
 	deep = deep||1
 	let nsons = []
 	let sons = filter(dataAry, o => o.parent == item.idf)
-	sons.map( (son, ii) => {
+	sons.forEach( (son, ii) => {
 		// son.itemClass = son.itemClass&&son.itemClass.indexOf('level'+deep)==-1 ? son.itemClass +' level'+deep : son.itemClass
 		son.itemClass = son.itemClass ? son.itemClass.indexOf('level' + deep) == -1 ? son.itemClass + ' level' + deep : son.itemClass : 'level'+deep
 		// son.itemClass = son.itemClass ? son.itemClass +' level'+deep : 'level'+deep
@@ -60,9 +60,10 @@ function subTree(item, dataAry, deep){
 }
 
 function owerTree(item) {
-	let ary = item.map( o => {
+	const ary = []
+	item.forEach( o => {
 		if (Array.isArray(o)) return owerTree(item)
-		return o
+		ary.push(o)
 	})
 	if (ary.length) {
 		return {li: ary}
@@ -73,7 +74,7 @@ function owerTree(item) {
 module.exports = function(dataAry){
 	let menus = []
 	idrecode = []
-	dataAry.map( (item, ii)=>{
+	dataAry.forEach( (item, ii)=>{
 		if (typeof item == 'string') menus.push(item)
 		if (typeof item == 'object' && !Array.isArray(item)) {
 		// if (_.isPlainObject(item)) {

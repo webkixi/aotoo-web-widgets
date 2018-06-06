@@ -1,9 +1,7 @@
 // const cloneDeep = Aotoo.cloneDeep
 const merge = Aotoo.merge
 const uniqueId = Aotoo.uniqueId
-// const isPlainObject = Aotoo.isPlainObject
 const isPlainObject = Aotoo.isObject
-// const filter = Aotoo.filter
 const itemrootCkb = <input type='checkbox' className='itemrootCkb'/>
 
 var mapKeys = function(obj, cb){
@@ -132,7 +130,7 @@ function normalItem(obj){
 function dealWithLi(prop_li, liClassName='property-ul'){
   var lis = []
   if(Array.isArray(prop_li)){
-    prop_li.map(function(li_item, li_i){
+    prop_li.forEach(function(li_item, li_i){
       if (typeof li_item != 'object') {
         li_item = {title: li_item}
       }
@@ -223,8 +221,9 @@ function ItemPart(item, index, key, cls, type) {
         if (item.img) {
           part_img = true
           if (Array.isArray(item.img)) {
-            __imgs = item.img.map(function(pic, j) {
-              return lazyimg.call(null, pic, j);
+            const __imgs = []
+            item.img.forEach(function(pic, j) {
+              __imgs.push(lazyimg.call(null, pic, j))
             });
             tmp_img = <ul className="himg">{__imgs}</ul>
           } else {
@@ -353,9 +352,8 @@ function dealWithData(state){
        if(data.img){
          if(Array.isArray(data.img)){
            var tmp_k2 = [];
-           tmp_k2 = data.img.map( (pic,j) => lazyimg.call({hoc: hoc}, pic, j) )
+           data.img.forEach( (pic,j) => tmp_k2.push(lazyimg.call({hoc: hoc}, pic, j)) )
            k4 = <ul className="himg">{tmp_k2}</ul>;
-          //  k4 = k2 = <ul className="himg">{tmp_k2}</ul>;
          } else{
            k4 = lazyimg.call({hoc: hoc}, data.img)
          }
@@ -364,7 +362,7 @@ function dealWithData(state){
        if(data.body){
          body = data.body;
          if(!Array.isArray(body)) body = [ body ]
-         body.map(function(item,i){
+         body.forEach(function(item,i){
            var __key = 'body_'+i
            var __cls = 'hb-item'
            var __type = 'body'
@@ -375,7 +373,7 @@ function dealWithData(state){
        if(data.footer){
            footer = data.footer;
            if(!Array.isArray(footer)) footer = [ footer ]
-           footer.map(function(item,i){
+           footer.forEach(function(item,i){
              var __key = 'footer_' + i
              var __cls = 'hf-item'
              var __type = 'footer'
@@ -386,7 +384,7 @@ function dealWithData(state){
        if(data.dot){
            dot = data.dot;
            if(!Array.isArray(dot)) dot = [ dot ]
-           dot.map(function(item,i){
+           dot.forEach(function(item,i){
              var __key = 'dot_' + i
              var __cls = 'hd-item dot'
              var __type = 'dot'
@@ -414,19 +412,21 @@ function dealWithData(state){
 
        // 排序header的三个部件，title, img, li
        function sortMyHead(){
-         return __sorts.map(function(item) { 
+         const sortItems = []
+         __sorts.forEach(function(item) {
            switch (item) {
              case 'title':
-               return k2 ? k2 : undefined
+               sortItems.push(k2 ? k2 : undefined)
                break;
              case 'img':
-               return k4 ? k4 : undefined
+               sortItems.push(k4 ? k4 : undefined)
                break;
              case 'li':
-               return liDom ? liDom : undefined
+               sortItems.push(liDom ? liDom : undefined)
                break;
             }
          })
+         return sortItems
        }
 
        if (k2 || k3 || k4) {

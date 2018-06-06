@@ -20,8 +20,8 @@ itemView
 var dealWithDataMethod = require('./common/itemDealWithDataX');
 
 function getClass(resault) {
-	var state = this.props;
-	var data = state.data;
+	var props = this.props;
+	var data = props.data;
 	var cls = resault.clsName;
 	if (data) {
 		if (data.className) cls = data.className;
@@ -64,7 +64,6 @@ var fox = function (_React$Component) {
 		value: function _preRender() {
 			this.resault = this.dealWithData(this.props);
 			this.idf = this.props.idf;
-			this.parent = '';
 		}
 	}, {
 		key: 'render',

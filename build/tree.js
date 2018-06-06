@@ -47,7 +47,7 @@ function subTree(item, dataAry, deep) {
 	var sons = filter(dataAry, function (o) {
 		return o.parent == item.idf;
 	});
-	sons.map(function (son, ii) {
+	sons.forEach(function (son, ii) {
 		// son.itemClass = son.itemClass&&son.itemClass.indexOf('level'+deep)==-1 ? son.itemClass +' level'+deep : son.itemClass
 		son.itemClass = son.itemClass ? son.itemClass.indexOf('level' + deep) == -1 ? son.itemClass + ' level' + deep : son.itemClass : 'level' + deep;
 		// son.itemClass = son.itemClass ? son.itemClass +' level'+deep : 'level'+deep
@@ -66,9 +66,10 @@ function subTree(item, dataAry, deep) {
 }
 
 function owerTree(item) {
-	var ary = item.map(function (o) {
+	var ary = [];
+	item.forEach(function (o) {
 		if (Array.isArray(o)) return owerTree(item);
-		return o;
+		ary.push(o);
 	});
 	if (ary.length) {
 		return { li: ary };
@@ -79,7 +80,7 @@ function owerTree(item) {
 module.exports = function (dataAry) {
 	var menus = [];
 	idrecode = [];
-	dataAry.map(function (item, ii) {
+	dataAry.forEach(function (item, ii) {
 		if (typeof item == 'string') menus.push(item);
 		if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
 			// if (_.isPlainObject(item)) {
