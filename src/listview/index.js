@@ -40,7 +40,7 @@ class TmpApp extends (React.PureComponent || React.Component) {
 		stateData.forEach(
 			(item, ii) => {
 				props.idf = ii
-				props.key = 'fox'+ii
+				props.key = item.key || 'fox' + ii
 				props.data = item
 				if (item && item.itemMethod) {
 					props.itemMethod = item.itemMethod

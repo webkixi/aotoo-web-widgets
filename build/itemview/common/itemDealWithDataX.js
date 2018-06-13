@@ -43,6 +43,11 @@ function sortObject(obj, sortsKey) {
   }
 }
 
+function itemKey(item, prefix) {
+  var dynamicKey = uniqueId(prefix);
+  return isPlainObject(item) ? item.key ? item.key : dynamicKey : dynamicKey;
+}
+
 function blankUrl(url) {
   var re = /^__ */g;
   if (url && re.test(url)) {
@@ -162,6 +167,9 @@ function dealWithLi(prop_li) {
   var liClassName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'property-ul';
 
   var lis = [];
+  if (!Array.isArray(prop_li)) {
+    prop_li = [prop_li];
+  }
   if (Array.isArray(prop_li)) {
     prop_li.forEach(function (li_item, li_i) {
       if ((typeof li_item === 'undefined' ? 'undefined' : _typeof(li_item)) != 'object') {
@@ -169,7 +177,8 @@ function dealWithLi(prop_li) {
       }
       var _item = normalItem(li_item);
       var _liItem;
-      var _props = { "key": uniqueId('li-') };
+      // var _props = { "key": li_item.key || uniqueId('li-') }
+      var _props = { "key": itemKey(li_item, "li_") };
       if (Array.isArray(li_item)) {
         _props.className = "nextLevel2";
         _liItem = React.createElement('li', _props, _item);
@@ -205,23 +214,14 @@ function dealWithLi(prop_li) {
     return React.createElement('ul', {
       className: liClassName
     }, lis);
-  } else {
-    lis.push(React.createElement(
-      'li',
-      { key: 'li-' + li_i },
-      prop_li
-    ));
-    return React.createElement('ul', {
-      className: liClassName
-    }, lis);
   }
 }
 
 function ItemPart(item, index, key, cls, type) {
   var i = index;
   var __bodys;
-  var __cls = cls;
-  var __key = key;
+  var __cls = cls || '';
+  var __key = key || uniqueId(type || 'normal_');
   if (typeof item === 'string' || typeof item === 'number') {
     __bodys = item;
   }
@@ -336,6 +336,7 @@ function ItemPart(item, index, key, cls, type) {
             var tempProps = typeof itemClass == 'string' ? merge({}, { className: __cls }) : {};
             tempProps = isPlainObject(itemStyle) ? merge(tempProps, { style: itemStyle }) : tempProps;
             tempProps = dataAttr ? _extends({}, tempProps, dataAttr) : tempProps;
+            tempProps.key = __key;
             return React.createElement(
               'span',
               tempProps,
@@ -349,7 +350,7 @@ function ItemPart(item, index, key, cls, type) {
             itemProps['style'] = itemStyle;
             // temp = React.cloneElement(temp, {style: itemStyle})
           }
-          return React.cloneElement(temp, _extends({}, itemProps, dataAttr));
+          return React.cloneElement(temp, _extends({}, itemProps, dataAttr, { key: __key }));
         }
       }();
 
@@ -475,7 +476,7 @@ function dealWithData(state) {
         body = data.body;
         if (!Array.isArray(body)) body = [body];
         body.forEach(function (item, i) {
-          var __key = 'body_' + i;
+          var __key = itemKey(item, 'body_');
           var __cls = 'hb-item';
           var __type = 'body';
           bodys.push(ItemPart(item, i, __key, __cls, __type));
@@ -486,7 +487,7 @@ function dealWithData(state) {
         footer = data.footer;
         if (!Array.isArray(footer)) footer = [footer];
         footer.forEach(function (item, i) {
-          var __key = 'footer_' + i;
+          var __key = itemKey(item, 'footer_');
           var __cls = 'hf-item';
           var __type = 'footer';
           footers.push(ItemPart(item, i, __key, __cls, __type));
@@ -497,7 +498,7 @@ function dealWithData(state) {
         dot = data.dot;
         if (!Array.isArray(dot)) dot = [dot];
         dot.forEach(function (item, i) {
-          var __key = 'dot_' + i;
+          var __key = itemKey(item, 'dot_');
           var __cls = 'hd-item dot';
           var __type = 'dot';
           dots.push(ItemPart(item, i, __key, __cls, __type));

@@ -59,7 +59,7 @@ var TmpApp = function (_ref) {
 			var items = [];
 			stateData.forEach(function (item, ii) {
 				props.idf = ii;
-				props.key = 'fox' + ii;
+				props.key = item.key || 'fox' + ii;
 				props.data = item;
 				if (item && item.itemMethod) {
 					props.itemMethod = item.itemMethod;
