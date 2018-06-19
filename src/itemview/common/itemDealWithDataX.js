@@ -326,7 +326,7 @@ function dealWithData(state){
          data = {title: data}
        }
 
-       if(data.itemClass) clsName = "item "+data.itemClass
+       clsName = "item " + (data.itemClass||data.className||'')
        if(data.itemStyle){
          sty = data.itemStyle;
        }

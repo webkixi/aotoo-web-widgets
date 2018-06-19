@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49,6 +51,8 @@ var TmpApp = function (_ref) {
 			var stateData = props.data || [];
 			var ItemView = props.itemView;
 
+			var activatedItem = props.activated;
+
 			//删除多余的属性
 			props.listClass = undefined;
 			props.listMethod = undefined;
@@ -61,11 +65,21 @@ var TmpApp = function (_ref) {
 				props.idf = ii;
 				props.key = item.key || 'fox' + ii;
 				props.data = item;
+				props.activated = false;
 				if (item && item.itemMethod) {
 					props.itemMethod = item.itemMethod;
 					delete item.itemMethod;
 				}
 				var listOperate = {}; //{ // parent: this.getListDom }
+
+				if (typeof activatedItem == 'number' && activatedItem == ii) {
+					props.activated = true;
+				}
+
+				if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && item.hasOwnProperty('activated')) {
+					props.activated = item.activated;
+				}
+
 				// return <Fox foxref={"child_"+ii} operate={listOperate} idf={ii} {...props} />;
 				if (ItemView && typeof ItemView == 'function') {
 					item.push(ItemView(props, Fox));

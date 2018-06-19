@@ -5,12 +5,14 @@ itemView
 // const React = (typeof React != 'undefined' ? React : require('react'))
 var dealWithDataMethod = require('./common/itemDealWithDataX')
 
-function getClass(resault){
+function getClass(resault) {
 	const props = this.props
 	const data = props.data
 	let cls = resault.clsName
+	if (props.activated) {
+		cls += ' actived'
+	}
 	if (data) {
-		if (data.className) cls = data.className
 		if (data.li) cls += ' itemroot'
 	}
 	return cls

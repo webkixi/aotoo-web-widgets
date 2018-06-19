@@ -1,6 +1,6 @@
 {
   "name": "aotoo-web-widgets",
-  "version": "1.2.13",
+  "version": "1.2.14",
   "description": "aotoo 元件",
   "main": "./build/index.js",
   "license": "MIT",

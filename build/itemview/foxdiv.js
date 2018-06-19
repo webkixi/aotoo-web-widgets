@@ -23,8 +23,10 @@ function getClass(resault) {
 	var props = this.props;
 	var data = props.data;
 	var cls = resault.clsName;
+	if (props.activated) {
+		cls += ' actived';
+	}
 	if (data) {
-		if (data.className) cls = data.className;
 		if (data.li) cls += ' itemroot';
 	}
 	return cls;

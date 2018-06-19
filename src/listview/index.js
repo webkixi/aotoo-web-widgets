@@ -29,6 +29,8 @@ class TmpApp extends (React.PureComponent || React.Component) {
 		const stateData = props.data||[]
 		const ItemView = props.itemView
 
+		const activatedItem = props.activated
+
 		//删除多余的属性
 		props.listClass = undefined
 		props.listMethod = undefined
@@ -42,11 +44,21 @@ class TmpApp extends (React.PureComponent || React.Component) {
 				props.idf = ii
 				props.key = item.key || 'fox' + ii
 				props.data = item
+				props.activated = false
 				if (item && item.itemMethod) {
 					props.itemMethod = item.itemMethod
 					delete item.itemMethod
 				}
 				const listOperate = {} //{ // parent: this.getListDom }
+
+				if (typeof activatedItem == 'number' && activatedItem == ii) {
+					props.activated = true
+				}
+
+				if (typeof item == 'object' && item.hasOwnProperty('activated')) {
+					props.activated = item.activated
+				}
+
 				// return <Fox foxref={"child_"+ii} operate={listOperate} idf={ii} {...props} />;
 				if (ItemView && typeof ItemView == 'function') {
 					item.push(ItemView(props, Fox))
