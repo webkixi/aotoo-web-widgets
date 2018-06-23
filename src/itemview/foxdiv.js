@@ -10,7 +10,10 @@ function getClass(resault) {
 	const data = props.data
 	let cls = resault.clsName
 	if (props.activated) {
-		cls += ' actived'
+		cls += ' activated'
+	}
+	if (props.disabled) {
+		cls += ' disabled'
 	}
 	if (data) {
 		if (data.li) cls += ' itemroot'

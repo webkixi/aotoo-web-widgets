@@ -24,7 +24,10 @@ function getClass(resault) {
 	var data = props.data;
 	var cls = resault.clsName;
 	if (props.activated) {
-		cls += ' actived';
+		cls += ' activated';
+	}
+	if (props.disabled) {
+		cls += ' disabled';
 	}
 	if (data) {
 		if (data.li) cls += ' itemroot';

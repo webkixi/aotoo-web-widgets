@@ -66,11 +66,18 @@ var TmpApp = function (_ref) {
 				props.key = item.key || 'fox' + ii;
 				props.data = item;
 				props.activated = false;
+				props.disabled = false;
+				var listOperate = {}; //{ // parent: this.getListDom }
+
+				if (typeof item == 'string' || typeof item == 'number' || React.isValidElement(item)) {
+					item = { title: item };
+					props.data = item;
+				}
+
 				if (item && item.itemMethod) {
 					props.itemMethod = item.itemMethod;
 					delete item.itemMethod;
 				}
-				var listOperate = {}; //{ // parent: this.getListDom }
 
 				if (typeof activatedItem == 'number' && activatedItem == ii) {
 					props.activated = true;
@@ -80,7 +87,10 @@ var TmpApp = function (_ref) {
 					props.activated = item.activated;
 				}
 
-				// return <Fox foxref={"child_"+ii} operate={listOperate} idf={ii} {...props} />;
+				if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && item.hasOwnProperty('disabled')) {
+					props.disabled = item.disabled;
+				}
+
 				if (ItemView && typeof ItemView == 'function') {
 					item.push(ItemView(props, Fox));
 				} else {

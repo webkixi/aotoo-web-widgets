@@ -101,6 +101,47 @@ function lazyimg(img, idf){
   }
 }
 
+function setItemClassName(item, curProps) {
+  if (item) {
+    if (item.className || item.itemClass) {
+      curProps.className = item.itemClass || item.className
+    }
+  
+    if (item.style) {
+      curProps.style = item.style
+    }
+  
+    // 激活className
+    if (item.activated) {
+      if (curProps.className) {
+        if (curProps.className.indexOf(' activated') == -1) {
+          curProps.className += ' activated'
+        }
+      } else {
+        curProps.className = 'activated'
+      }
+    }
+    
+    // 无效className
+    if (item.disabled) {
+      if (curProps.className) {
+        if (curProps.className.indexOf(' disabled') == -1) {
+          curProps.className += ' disabled'
+        }
+      } else {
+        curProps.className = 'disabled'
+      }
+    }
+    
+    // li className
+    if (item.li) {
+      curProps.className = curProps.className ? curProps.className + ' itemroot' : 'itemroot'
+    }
+  }
+
+  return curProps
+}
+
 // 处理title及url
 // 处理li的相关数据
 function normalItem(obj){
@@ -169,11 +210,12 @@ function dealWithLi(prop_li, liClassName='property-ul'){
           });
           _props = merge(_props, data_attr);
         }
-        if (li_item.li) {   // itemroot
-          _props.className = li_item.itemClass ? li_item.itemClass+' itemroot' : 'itemroot'
-        } else {
-          _props.className = li_item.itemClass ? li_item.itemClass : ''
-        }
+        _props = setItemClassName(li_item, _props)
+        // if (li_item.li) {   // itemroot
+        //   _props.className = li_item.itemClass ? li_item.itemClass+' itemroot' : 'itemroot'
+        // } else {
+        //   _props.className = li_item.itemClass ? li_item.itemClass : ''
+        // }
         _liItem = React.createElement('li', _props, _item)
       }
       lis.push(_liItem)
@@ -326,7 +368,11 @@ function dealWithData(state){
          data = {title: data}
        }
 
-       clsName = "item " + (data.itemClass||data.className||'')
+       if (data.itemClass || data.className) {
+         const _clsName = data.itemClass || data.className
+         clsName += ' ' + _clsName
+       }
+      //  clsName = "item " + (data.itemClass||data.className||'')
        if(data.itemStyle){
          sty = data.itemStyle;
        }

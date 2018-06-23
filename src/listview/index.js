@@ -45,11 +45,18 @@ class TmpApp extends (React.PureComponent || React.Component) {
 				props.key = item.key || 'fox' + ii
 				props.data = item
 				props.activated = false
+				props.disabled = false
+				const listOperate = {} //{ // parent: this.getListDom }
+
+				if (typeof item == 'string' || typeof item == 'number' || React.isValidElement(item)) {
+					item = {title: item}
+					props.data = item
+				}
+				
 				if (item && item.itemMethod) {
 					props.itemMethod = item.itemMethod
 					delete item.itemMethod
 				}
-				const listOperate = {} //{ // parent: this.getListDom }
 
 				if (typeof activatedItem == 'number' && activatedItem == ii) {
 					props.activated = true
@@ -59,7 +66,10 @@ class TmpApp extends (React.PureComponent || React.Component) {
 					props.activated = item.activated
 				}
 
-				// return <Fox foxref={"child_"+ii} operate={listOperate} idf={ii} {...props} />;
+				if (typeof item == 'object' && item.hasOwnProperty('disabled')) {
+					props.disabled = item.disabled
+				}
+
 				if (ItemView && typeof ItemView == 'function') {
 					item.push(ItemView(props, Fox))
 				} else {
