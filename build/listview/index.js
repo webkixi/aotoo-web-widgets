@@ -92,7 +92,7 @@ var TmpApp = function (_ref) {
 				}
 
 				if (ItemView && typeof ItemView == 'function') {
-					item.push(ItemView(props, Fox));
+					items.push(ItemView(props, Fox));
 				} else {
 					items.push(React.createElement(Fox, props));
 				}

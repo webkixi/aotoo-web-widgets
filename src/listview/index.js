@@ -71,7 +71,7 @@ class TmpApp extends (React.PureComponent || React.Component) {
 				}
 
 				if (ItemView && typeof ItemView == 'function') {
-					item.push(ItemView(props, Fox))
+					items.push(ItemView(props, Fox))
 				} else {
 					items.push(<Fox {...props} />)
 				}
