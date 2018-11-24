@@ -85,7 +85,8 @@ module.exports = function (dataAry) {
 		if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
 			// if (_.isPlainObject(item)) {
 			if (item['attr']) {
-				if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = ii;
+				item['attr']['data-treeid'] = ii;
+				// if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = ii
 			} else {
 				if (item['$$typeof']) {
 					item = { title: item, attr: { 'treeid': ii } };
